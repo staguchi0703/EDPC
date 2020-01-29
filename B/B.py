@@ -21,7 +21,7 @@ h =[0] + [int(item) for item in input().split()]
 
 dp = [0 for _ in range(N+1)]
 
-for i in range(N+1):
+for i in range(2, N+1):
     for k in range(1, K+1):
         if i - k >= 1:
             if dp[i] != 0:

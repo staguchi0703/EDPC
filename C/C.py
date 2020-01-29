@@ -16,6 +16,20 @@ sys.stdin=f
 ##################################
 # %%
 # 以下ペースト可
-num_list = [int(item) for item in input().split()]
-print('C', num_list)
+N = int(input())
+act = [0] + [[int(item) for item in input().split()] for _ in range(N)]
+
+dp = [[0 for _ in range(3)] for _ in range(N+1)]
+
+for i in range(1,N+1):
+    for j in range(3):
+        temp_hp = []
+        for k in range(3):
+            if k != j:
+                temp_hp.append(dp[i-1][k] + act[i][j])
+        dp[i][j] = max(temp_hp)
+# print(dp)
+print(max(dp[N]))
+
+
 
