@@ -2,7 +2,7 @@
 # VScodeで入力をテキストから読み込んで標準入力に渡す
 import sys
 import os
-f=open(r'.\A\A_input.txt', 'r', encoding="utf-8")
+f=open(r'.\template\input.txt', 'r', encoding="utf-8")
 # inputをフルパスで指定
 # win10でファイルを作るとs-jisで保存されるため、読み込みをutf-8へエンコードする必要あり
 # VScodeでinput file開くとutf8になってるんだけど中身は結局s-jisになっているらしい
@@ -21,15 +21,24 @@ hight_list = [int(item) for item in input().split()]
 
 
 dp = [0 for i in range(N+1)]
+dp[0] = hight_list[0] 
 
-dp[1] = abs(hight_list[1] - hight_list[0])
+def rec(i):
+    if dp[i] != 0:
+        return dp[i]
 
-for i in range(2, N):
-    jump1 = abs(hight_list[i] - hight_list[i-1])
-    jump2 = abs(hight_list[i] - hight_list[i-2])
+    jump1 = abs(dp[i+2] - dp[i])
+    jump2 = abs(dp[i+1] - dp[i])
 
-    dp[i] = min(dp[i-1] + jump1, dp[i-2] + jump2)
+    if jump1 > jump2:
+        dp[i+2] = rec(i) + jump2
+        return dp[i+2]
+    else:
+        dp[i+1] = rec(i) + jump1
+        return dp[i+1]
 
-
-print(dp[N-1])
+print(rec(N))
     
+
+    
+
