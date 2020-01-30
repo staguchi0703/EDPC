@@ -16,6 +16,19 @@ sys.stdin=f
 ##################################
 # %%
 # 以下ペースト可
-num_list = [int(item) for item in input().split()]
-print('D',num_list)
+N, W = [int(item) for item in input().split()]
+item = [[int(item) for item in input().split()] for _ in range(N)]
 
+dp = [0 for _ in range(W+1)]
+
+for i in range(N):
+    for w in range(W+1):
+        if dp[w != 0:
+            if w + item[i][0] <= W:
+                dp[w + item[i][0]] = max(dp[w +item[i][0]], dp[w] + item[i][1])
+        else:
+            dp[w + item[i][0]] = dp[w] + item[i][1]
+        
+        print(dp)
+
+print(dp[W])
