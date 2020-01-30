@@ -19,16 +19,12 @@ sys.stdin=f
 N, W = [int(item) for item in input().split()]
 item = [[int(item) for item in input().split()] for _ in range(N)]
 
-dp = [0 for _ in range(W+1)]
+dp = [[0 for _ in range(W+1)] for _ in range(N+1)]
 
 for i in range(N):
     for w in range(W+1):
-        if dp[w != 0:
-            if w + item[i][0] <= W:
-                dp[w + item[i][0]] = max(dp[w +item[i][0]], dp[w] + item[i][1])
+        if 0 <= w - item[i][0]:
+            dp[i+1][w] = max(dp[i][w], dp[i][w - item[i][0]] + item[i][1])
         else:
-            dp[w + item[i][0]] = dp[w] + item[i][1]
-        
-        print(dp)
-
-print(dp[W])
+            dp[i+1][w] = dp[i][w]
+print(dp[N][W])
