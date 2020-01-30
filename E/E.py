@@ -16,6 +16,16 @@ sys.stdin=f
 ##################################
 # %%
 # 以下ペースト可
-num_list = [int(item) for item in input().split()]
-print('E', num_list)
+N, W = [int(item) for item in input().split()]
+item = [[int(item) for item in input().split()] for _ in range(N)]
 
+dp = [[0 for _ in range(W+1)] for _ in range(2)]
+
+for i in range(N):
+    odd_even = i % 2
+    for w in range(W+1):
+        dp[odd_even^1][w] = max(dp[odd_even^1][w], dp[odd_even][w])
+        if w - item[i][0] <= W:
+            dp[odd_even ^ 1][w] = max(dp[odd_even^1][w], dp[odd_even][w - item[i][0]] + item[i][1])
+        print(dp)
+print(dp[N%2][W])
