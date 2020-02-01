@@ -27,9 +27,11 @@
 
 #### 実装
 
-* 位置iでコスト計算を`cost = abs(h[i] - h[i-k])`と書きたかったので、hのindex0にダミーの[0]を加えた。
-* pythonだとTLEした。
-* pypy3だと1テストケース通らなかった。
+* 配列の最大値を`max1 = min(N, i+K)`とすればif分で値の場合分けがいらない
+* 処理系をmain()関数としておくと、ちょっと早くなる
+* importは上記main()の外にだす
+* 答えの出力もmain()の中に入れておくと早い
+
 
 
 ### [C - Vacation](https://atcoder.jp/contests/dp/tasks/dp_c)
