@@ -16,16 +16,23 @@ sys.stdin=f
 ##################################
 # %%
 # 以下ペースト可
+import sys
+input = sys.stdin.readline
+import numpy as np
+
 N, K = [int(item) for item in input().split()]
-h =[0] + [int(item) for item in input().split()]
+h =np.array([int(item) for item in input().split()])
+# print(h.shape)
+dp = np.full(N+K, 10**10+1, dtype='int64')
+dp[0] = 0
 
-dp = [0 for _ in range(N+1)]
+for i in range(1, N):
+    max1 = min(N, i+K)
+    cost = abs(h[i:max1] - h[i-1])
+    # print(cost.shape, dp[i:max1].shape)
+    dp[i:max1] = np.minimum(dp[i:max1], dp[i-1] + cost)
 
-for i in range(2, N+1):
-    for k in range(1, K+1):
-        if i - k >= 1:
-            if dp[i] != 0:
-                dp[i] = min(dp[i-k] + abs(h[i] - h[i-k]), dp[i])
-            else:
-                dp[i] = dp[i-k] + abs(h[i] - h[i-k])
-print(dp[N])
+    # print(dp)
+print(dp[N-1])
+
+
