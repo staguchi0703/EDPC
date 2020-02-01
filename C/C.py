@@ -16,20 +16,23 @@ sys.stdin=f
 ##################################
 # %%
 # 以下ペースト可
-N = int(input())
-act = [0] + [[int(item) for item in input().split()] for _ in range(N)]
+import sys
+input = sys.stdin.readline
+import numpy as np
 
-dp = [[0 for _ in range(3)] for _ in range(N+1)]
+def main():
+    N = int(input())
+    act = np.array([[int(item) for item in input().split()] for _ in range(N)])
 
-for i in range(1,N+1):
-    for j in range(3):
-        temp_hp = []
-        for k in range(3):
-            if k != j:
-                temp_hp.append(dp[i-1][k] + act[i][j])
-        dp[i][j] = max(temp_hp)
-# print(dp)
-print(max(dp[N]))
+    dp = np.zeros((2, 3), dtype='int64')
 
+    for i in range(0,N):
+        for j in range(3):
+            prev_dp_array = [dp[i%2][k] if k != j else 0 for k in range(3)]
+            dp[i%2 ^ 1][j] = np.max(prev_dp_array + act[i][j])
+        # print(dp)
+    print(np.max(dp))
+
+main()
 
 
