@@ -25,13 +25,15 @@ def main():
     act = np.array([[int(item) for item in input().split()] for _ in range(N)])
 
     dp = np.zeros((2, 3), dtype='int64')
-    zero_diag = np.ones((3, 3), dtype='int64') - np.eye(3, dtype='int64')
-    print(zero_diag)
+    selector = np.array([[0,1,1], [1,0,1], [1,1,0]])
+
     for i in range(0,N):
-        act_array = np.array([[act[i]]*3])*zero_diag
-        dp[i%2 ^ 1] = #計算の方法を考えるこ
-        # print(dp)
-    print(np.max(dp))
+        print(dp[i%2]*selector)
+        print(np.max(dp[i%2]*selector, axis=0))
+        dp[i%2^1] = np.max(dp[i%2]*selector, axis=0) + act[i]
+        print(dp)
+
+    print(max(dp[N%2]))
 
 main()
 
