@@ -29,8 +29,8 @@ def main():
 
     for i in range(0,N):
         print(dp[i%2]*selector)
-        print(np.max(dp[i%2]*selector, axis=0))
-        dp[i%2^1] = np.max(dp[i%2]*selector, axis=0) + act[i]
+        print(np.max(dp[i%2]*selector, axis=1))
+        dp[i%2^1] = np.max(dp[i%2]*selector, axis=1) + act[i]
         print(dp)
 
     print(max(dp[N%2]))
