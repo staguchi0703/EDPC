@@ -28,10 +28,10 @@ def main():
     selector = np.array([[0,1,1], [1,0,1], [1,1,0]])
 
     for i in range(0,N):
-        print(dp[i%2]*selector)
-        print(np.max(dp[i%2]*selector, axis=1))
+        # print(dp[i%2]*selector)
+        # print(np.max(dp[i%2]*selector, axis=1))
         dp[i%2^1] = np.max(dp[i%2]*selector, axis=1) + act[i]
-        print(dp)
+        # print(dp)
 
     print(max(dp[N%2]))
 
