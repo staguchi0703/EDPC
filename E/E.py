@@ -16,16 +16,19 @@ sys.stdin=f
 ##################################
 # %%
 # 以下ペースト可
-N, W = [int(item) for item in input().split()]
-item = [[int(item) for item in input().split()] for _ in range(N)]
+import sys
+input = sys.stdin.readline
+import numpy as np
 
-dp = [[0 for _ in range(W+1)] for _ in range(2)]
+N, W = [int(item) for item in input().split()]
+item = np.array([[int(item) for item in input().split()] for _ in range(N)])
+
+
+dp = np.zeros((N+1, 10**5 + 1), dtype='int64')
 
 for i in range(N):
-    odd_even = i % 2
-    for w in range(W+1):
-        dp[odd_even^1][w] = max(dp[odd_even^1][w], dp[odd_even][w])
-        if w - item[i][0] <= W:
-            dp[odd_even ^ 1][w] = max(dp[odd_even^1][w], dp[odd_even][w - item[i][0]] + item[i][1])
-        print(dp)
-print(dp[N%2][W])
+    dp[i+1] = dp[i]
+    w, v = item[i]
+    np.maximum(dp[i][v:], dp[i][:-v] + w, out=dp[i+1][v:])
+
+print(np.where(dp[N]<=W))
