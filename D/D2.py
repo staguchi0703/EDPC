@@ -24,14 +24,14 @@ def main():
     N, W = [int(item) for item in input().split()]
     item = np.array([[int(item) for item in input().split()] for _ in range(N)])
 
-    dp = np.zeros((N+1, W+1), dtype='int64')
+    dp = np.zeros((2, W+1), dtype='int64')
 
     for i in range(N):
-        dp[i+1] = dp[i]
+        dp[i%2 ^ 1] = dp[i % 2]
         w, v = item[i]
-        np.maximum(dp[i][:-w] + v, dp[i][w:], out=dp[i+1][w:])
-        print(dp[i+1])
-    print(dp[N][W])
+        np.maximum(dp[i%2][:-w] + v, dp[i%2][w:], out=dp[i%2 ^ 1][w:])
+        # print(dp[i+1])
+    print(dp[N%2][W])
 
 if __name__ == "__main__":
     main()
