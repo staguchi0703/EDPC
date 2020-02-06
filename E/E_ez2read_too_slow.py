@@ -20,20 +20,20 @@ import sys
 input = sys.stdin.readline
 import numpy as np
 
-def main():
-    N, W = [int(item) for item in input().split()]
-    item = np.array([[int(item) for item in input().split()] for _ in range(N)])
+N, W = [int(item) for item in input().split()]
+item = np.array([[int(item) for item in input().split()] for _ in range(N)])
 
 
-    dp = np.full((N+1, 10**5 + 1), 10**12+1)
-    dp[0][0] = 0
+dp = np.full((N+1, 10**5 + 1), 10**12+1)
+dp[0][0] = 0
 
-    for i in range(N):
-        dp[i+1] = dp[i]
+for i in range(N):
+    for j in range(10**5 + 1):
         w, v = item[i]
-        np.minimum(dp[i][v:], dp[i][:-v] + w, out=dp[i+1][v:])
+        if j >= v:
+            dp[i+1][j] = min(dp[i][j], dp[i][j - v] + w)
+        else:
+            dp[i+1][j] = dp[i][j]
 
-    print(np.where(dp[N] <= W)[0][-1])
+print(np.where(dp[N] <= W)[0][-1])
 
-if __name__ == "__main__":
-    main()
