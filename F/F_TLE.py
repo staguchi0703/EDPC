@@ -18,22 +18,23 @@ sys.stdin=f
 # 以下ペースト可
 import numpy as np
 
-s = np.array([i for i in input()])
-t = np.array([i for i in input()])
+s = input()
+t = input()
 
-num_s = int(s.shape[0])
-num_t = int(t.shape[0])
+num_s = len(s)
+num_t = len(t)
 
+dp = np.zeros((num_s + 1, num_t +1), dtype='int64')
 
-dp = np.zeros((num_t +1), dtype='int64')
-
-eq = s[:,None] == t[None,:]
-print(len(eq[0]))
 
 for i in range(num_s):
-    np.maximum(dp[i+1:], dp[:-(i+1)] + 1, out=dp[i+1:])
+    for j in range(num_t):
+        if s[i] == t[j]:
+            dp[i+1, j+1] = max([dp[i, j] + 1, dp[i+1, j], dp[i, j+1]])
+        else:
+            dp[i+1, j+1] = max([dp[i+1, j], dp[i, j+1]])
 
-print(dp)
+# print(dp)
 
 res=''
 pos_s = num_s
