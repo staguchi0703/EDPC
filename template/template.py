@@ -16,29 +16,10 @@ sys.stdin=f
 ##################################
 # %%
 # 以下ペースト可
-N = int(input())
-hight_list = [int(item) for item in input().split()]
+import sys
+input = sys.stdin.readline
 
 
-dp = [0 for i in range(N+1)]
-dp[0] = hight_list[0] 
-
-def rec(i):
-    if dp[i] != 0:
-        return dp[i]
-
-    jump1 = abs(dp[i+2] - dp[i])
-    jump2 = abs(dp[i+1] - dp[i])
-
-    if jump1 > jump2:
-        dp[i+2] = rec(i) + jump2
-        return dp[i+2]
-    else:
-        dp[i+1] = rec(i) + jump1
-        return dp[i+1]
-
-print(rec(N))
-    
 
     
 

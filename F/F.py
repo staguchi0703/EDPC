@@ -16,6 +16,25 @@ sys.stdin=f
 ##################################
 # %%
 # 以下ペースト可
-num_list = [int(item) for item in input().split()]
-print('F', num_list)
+import sys
+input = sys.stdin.readline
+import numpy as np
 
+s = input()
+t = input()
+
+num_s = len(s)
+num_t = len(t)
+
+dp = np.zeros((num_s + 1, num_t + 1), dtype='int64')
+
+
+for i in range(num_s):
+    for j in range(num_t):
+        if s[i] == t[j]:
+            dp[i+1][j+1] = max(dp[i][j] + 1, dp[i+1][j], dp[i][j+1])
+        else:
+            dp[i+1][j+1] = max(dp[i+1][j], dp[i][j])
+    print(dp[i])
+
+print(np.max(dp))
