@@ -25,15 +25,14 @@ def main():
     item = np.array([[int(item) for item in input().split()] for _ in range(N)])
 
 
-    dp = np.full((N+1, 10**5 + 1), 10**12+1)
-    dp[0][0] = 0
+    dp = np.full(10**5 + 1, W+1)
+    dp[0] = 0
 
     for i in range(N):
-        dp[i+1] = dp[i]
         w, v = item[i]
-        np.minimum(dp[i][v:], dp[i][:-v] + w, out=dp[i+1][v:])
+        np.minimum(dp[v:], dp[:-v] + w, out=dp[v:])
 
-    print(np.where(dp[N] <= W)[0][-1])
+    print(np.where(dp <= W)[0][-1])
 
 if __name__ == "__main__":
     main()
