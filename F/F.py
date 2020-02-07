@@ -16,8 +16,6 @@ sys.stdin=f
 ##################################
 # %%
 # 以下ペースト可
-import sys
-input = sys.stdin.readline
 import numpy as np
 
 s = input()
@@ -26,15 +24,40 @@ t = input()
 num_s = len(s)
 num_t = len(t)
 
-dp = np.zeros((num_s + 1, num_t + 1), dtype='int64')
+dp = np.zeros((num_s + 1, num_t +1), dtype='int64')
 
 
 for i in range(num_s):
     for j in range(num_t):
         if s[i] == t[j]:
-            dp[i+1][j+1] = max(dp[i][j] + 1, dp[i+1][j], dp[i][j+1])
+            dp[i+1, j+1] = max([dp[i, j] + 1, dp[i+1, j], dp[i, j+1]])
         else:
-            dp[i+1][j+1] = max(dp[i+1][j], dp[i][j])
-    print(dp[i])
+            dp[i+1, j+1] = max([dp[i+1, j], dp[i, j+1]])
 
-print(np.max(dp))
+# print(dp)
+
+is_search = True
+res=''
+pos_s = num_s
+pos_t = num_t
+
+
+while len(res) < np.max(dp):
+    temp = dp[pos_s, pos_t]
+    # print(temp)
+    if dp[pos_s-1, pos_t] == temp:
+        pos_s -= 1
+
+    if dp[pos_s, pos_t-1] == temp:
+        pos_t -= 1
+
+    if dp[pos_s-1, pos_t-1] != temp:
+        res += s[pos_s-1]
+        pos_s -= 1
+        pos_t -= 1
+
+    # print(res, pos_s-1)
+        
+
+print(res[::-1])
+
