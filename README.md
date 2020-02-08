@@ -47,3 +47,44 @@
 
 * 日にちの加算値を`act[i][j]`と書きたかったので、hのindexの頭に[0]を加える
 * 日にちのfor loopは`for i in range(1, N+1)`としiは日にちとする
+
+
+
+### [F - LCS](https://atcoder.jp/contests/dp/tasks/dp_f)
+
+#### 方針
+
+* 二重ループだと間に合わないのでnumpyを活用する
+* dpテーブルを求めてからさかのぼるって解のうち一つを見つける
+
+
+#### 実装
+* 加算可能な組み合わせ行列をあらかじめ作る
+  * `eq = s[:,None] == t[None, :]`
+* numpyの技
+  * `i,j+1`と`i,j`に+1したもののうち大きいほうを選ぶ
+    * `np.maximum(dp[i,j+1], dp[i,j] + 加算可能な場合1)`
+  * `i+1, j`と`i+1, j+1`の大きいほうを採用する
+    * `np.maximum.accumulate(dp[i+1])`
+
+#### 補足
+* 二重ループでの漸化式は以下
+
+``` python
+for i in range(num_s):
+    for j in range(num_t):
+        if s[i] == t[j]:
+            dp[i+1, j+1] = max([dp[i, j] + 1, dp[i+1, j], dp[i, j+1]])
+        else:
+            dp[i+1, j+1] = max([dp[i+1, j], dp[i, j+1]])
+```
+
+* これをnumpyの行列処理にすると・・・
+
+```python
+
+for i in range(num_s):
+    np.maximum(dp[i, 1:], dp[i, :-1] + eq[i], out=dp[i+1, 1:])
+    # eq[i] = 加算可能な組み合わせを行列であらわしたもの
+    np.maximum.accumulate(dp[i+1], out=dp[i+1])
+```

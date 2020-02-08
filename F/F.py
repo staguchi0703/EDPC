@@ -18,44 +18,45 @@ sys.stdin=f
 # 以下ペースト可
 import numpy as np
 
-s = np.array([i for i in input()])
-t = np.array([i for i in input()])
+def main():
+    s = np.array([str(i) for i in input()])
+    t = np.array([str(i) for i in input()])
 
-num_s = int(s.shape[0])
-num_t = int(t.shape[0])
-
-
-dp = np.zeros((num_t +1), dtype='int64')
-
-eq = s[:,None] == t[None,:]
-print(len(eq[0]))
-
-for i in range(num_s):
-    np.maximum(dp[i+1:], dp[:-(i+1)] + 1, out=dp[i+1:])
-
-print(dp)
-
-res=''
-pos_s = num_s
-pos_t = num_t
+    num_s = int(s.shape[0])
+    num_t = int(t.shape[0])
 
 
-while len(res) < np.max(dp):
-    temp = dp[pos_s, pos_t]
-    # print(temp)
-    if dp[pos_s-1, pos_t] == temp:
-        pos_s -= 1
+    dp = np.zeros((num_s +1, num_t +1), dtype='int32')
 
-    if dp[pos_s, pos_t-1] == temp:
-        pos_t -= 1
+    eq = s[:,None] == t[None,:]
+    # print(len(eq[0]))
 
-    if dp[pos_s-1, pos_t-1] != temp:
-        res += s[pos_s-1]
-        pos_s -= 1
-        pos_t -= 1
+    for i in range(num_s):
+        np.maximum(dp[i, 1:], dp[i, :-1] + eq[i], out=dp[i+1, 1:])
+        np.maximum.accumulate(dp[i+1], out=dp[i+1])
+    # print(dp)
 
-    # print(res, pos_s-1)
+    res=''
+    pos_s = num_s
+    pos_t = num_t
+
+
+    while len(res) < np.max(dp[num_s]):
+        temp = dp[pos_s, pos_t]
+        # print(temp)
+        if dp[pos_s-1, pos_t] == temp:
+            pos_s -= 1
+
+        if dp[pos_s, pos_t-1] == temp:
+            pos_t -= 1
+
+        else:
+            res += s[pos_s-1]
+            pos_s -= 1
+            pos_t -= 1
+
+        # print(res, pos_s-1)
         
+    print(res[::-1])
 
-print(res[::-1])
-
+main()

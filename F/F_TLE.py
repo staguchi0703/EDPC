@@ -34,7 +34,7 @@ for i in range(num_s):
         else:
             dp[i+1, j+1] = max([dp[i+1, j], dp[i, j+1]])
 
-# print(dp)
+print(dp)
 
 res=''
 pos_s = num_s
