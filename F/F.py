@@ -19,14 +19,14 @@ sys.stdin=f
 import numpy as np
 
 def main():
-    s = np.array([str(i) for i in input()])
-    t = np.array([str(i) for i in input()])
+    s = np.array([str(i) for i in input()], dtype=np.unicode)
+    t = np.array([str(i) for i in input()], dtype=np.unicode)
 
     num_s = int(s.shape[0])
     num_t = int(t.shape[0])
 
 
-    dp = np.zeros((num_s +1, num_t +1), dtype='int32')
+    dp = np.zeros((num_s +1, num_t +1), dtype='int64')
 
     eq = s[:,None] == t[None,:]
     # print(len(eq[0]))
@@ -50,7 +50,7 @@ def main():
         if dp[pos_s, pos_t-1] == temp:
             pos_t -= 1
 
-        else:
+        if s[pos_s - 1] == t[pos_t - 1]:
             res += s[pos_s-1]
             pos_s -= 1
             pos_t -= 1
