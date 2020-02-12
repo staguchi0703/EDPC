@@ -16,11 +16,12 @@ sys.stdin=f
 ##################################
 # %%
 # 以下ペースト可
+import numpy as np
 
 H, W = [int(item) for item in input().split()]
 grid = [[item for item in input()] for _ in range(H)]
 
-dp = [[0 for _ in range(W+1)] for _ in range(H+1)]
+dp = np.zeros((H+1, W+1), dtype='int32')
 max_num = 10**9 +7
 
 def main():

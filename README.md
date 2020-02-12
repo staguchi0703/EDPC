@@ -88,3 +88,17 @@ for i in range(num_s):
     # eq[i] = 加算可能な組み合わせを行列であらわしたもの
     np.maximum.accumulate(dp[i+1], out=dp[i+1])
 ```
+
+
+### [G - Grid](https://atcoder.jp/contests/dp/tasks/dp_G)
+
+#### 方針
+
+
+
+#### 実装
+
+* numpy ndarrayをfor文の中で参照していたら重くてTLE
+* 配列をpython listにしたら速かった
+
+
