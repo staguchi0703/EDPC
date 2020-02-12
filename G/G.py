@@ -18,18 +18,8 @@ sys.stdin=f
 # 以下ペースト可
 import sys
 input = sys.stdin.readline
+import numpy as np
+import collections
 
-N, M = [int(i) for i in input().split()]
-
-edges_list = [[int(i) for i in input().split()] for _ in range(M)]
-
-x_list = [item[0] for item in edges_list]
-y_list = [item[1] for item in edges_list]
-
-# print(set(x_list), set(y_list))
-# print(set(x_list) ^ set(y_list))
-start_node = (set(x_list) & (set(x_list) ^ set(y_list)))
-# print(start_node)
-
-
-
+# トポロジカルソートの考え方が必要
+# グラフをかじってからやり直す
