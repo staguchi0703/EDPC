@@ -29,6 +29,7 @@ print(dp)
 
 res = 0.0
 
+#漸化式を考える
 for i in range(N):
     for j in range(N):
         dp[i+1][j] = dp[i][j] * p1_list[i]
