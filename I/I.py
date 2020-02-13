@@ -22,22 +22,20 @@ N = int(input())
 p0_list = np.array([float(item) for item in input().split()])
 p1_list = 1 - p0_list
 
-dp = np.zeros((N+1, N+1), dtype='float')
 
+dp = [[[1.] + [0.0]*N] for _ in range(N+1)] 
+dp[0] = [1.] * (N+1)
+print(dp)
 
-dp[0, :] = 1
-dp[:, 0] = 1
+res = 0.0
 
-#掛けるで操作する
-#
+for i in range(N):
+    for j in range(N):
+        dp[i+1][j] = dp[i][j] * p1_list[i]
+        dp[i][j+1] = dp[i][j] * p0_list[j] 
 
-print(dp[0])
-
-# for i in range(N):
-    
-#     dp[i+1] = dp[i] * p1_list
-#     dp[i+1] =
-
+print(dp)
+print(res)
 
     
 
