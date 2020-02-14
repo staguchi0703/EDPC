@@ -17,26 +17,23 @@ sys.stdin=f
 # %%
 # 以下ペースト可
 import numpy as np
+import sys
+input = sys.stdin.readline
 
-N = int(input())
-p0_list = np.array([float(item) for item in input().split()])
-p1_list = 1 - p0_list
+def main():
+    N = int(input())
+    p0_list = np.array([float(item) for item in input().split()])
+    p1_list = 1 - p0_list
 
+    dp = np.zeros((N+1, N+1), dtype='float')
+    dp[0, 0] = 1
 
-dp = [[[1.] + [0.0]*N] for _ in range(N+1)] 
-dp[0] = [1.] * (N+1)
-print(dp)
+    for i in range(N):
+        dp[i+1][:-1] += dp[i][:-1] * p1_list[i]
+        dp[i+1][1:]  += dp[i][:-1] * p0_list[i]
 
-res = 0.0
+    print(np.sum(dp[N, (N+1)//2:]))
 
-#漸化式を考える
-for i in range(N):
-    for j in range(N):
-        dp[i+1][j] = dp[i][j] * p1_list[i]
-        dp[i][j+1] = dp[i][j] * p0_list[j] 
-
-print(dp)
-print(res)
-
-    
+if __name__ == "__main__":
+    main()    
 
