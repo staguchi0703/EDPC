@@ -88,3 +88,15 @@ for i in range(num_s):
     # eq[i] = 加算可能な組み合わせを行列であらわしたもの
     np.maximum.accumulate(dp[i+1], out=dp[i+1])
 ```
+
+
+
+### [I - COIN](https://atcoder.jp/contests/dp/tasks/dp_i)
+
+#### 方針
+
+* 何個目のコインと表の数をIndexにとってDP
+
+#### 実装
+* N=2999 なので2重ループが間に合わない
+* numpyの行列計算を使って、ループを減らす
